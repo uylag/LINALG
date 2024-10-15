@@ -1,4 +1,27 @@
+# Ignore VScode configuration files
 .vscode/
 
-build/
-bin/
+# Ignore build directories (CMake build directories)
+build*/
+bin*/
+
+# Ignore all essential files (if have)
+*.env
+
+# Ignore system-generated files
+.DS_Store
+Thumbs.db
+
+# Ignore main file because our product is library
+main.cxx
+
+# Ignore CMake-specific files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Ignore log, temp-files and non-essential files
+*.log
+*.tmp
+*.swp

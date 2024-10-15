@@ -1,17 +1,16 @@
-//
-// Created 2024/10/13 by Akayo Kiyoshima @uylag
-//
+#pragma once
 
-#ifndef LINEAR_ALGEBRA_HXX
-#define LINEAR_ALGEBRA_HXX
+#ifndef DEFINITION_MATRIX_HXX
+#define DEFINITION_MATRIX_HXX
 
 #include <vector>
 #include <string>
 #include <initializer_list>
+#include "linalg.hxx"
 
-class linalg {
-public:
-    template <typename T>
+namespace linalg {
+
+    template<typename T>
     class Matrix {
     public:
         // Structs
@@ -106,61 +105,40 @@ public:
         static CCS init_ccs(const std::vector<std::vector<T>> _matrix);
         static COO init_coo(const std::vector<std::vector<T>> _matrix);
 
-        T& get(int i, int j) {
-            if (matrix_state == "def" || matrix_state == "all") return matrix[i][j];
-            else if (matrix_state == "CRS")                     return crs_matrix(i, j);
-            else if (matrix_state == "CCS")                     return ccs_matrix(i, j);
-            else if (matrix_state == "COO")                     return coo_matrix(i, j);
-        }
+        T& get(int i, int j);
 
-        void set(int i, int j, const T& _val) {
-            if (matrix_state == "def") matrix[i][j] = _val;
-            else if (matrix_state == "CRS") crs_matrix.set(i, j, _val);
-            else if (matrix_state == "CCS") ccs_matrix.set(i, j, _val);
-            else if (matrix_state == "COO") coo_matrix.set(i, j, _val);
-            else if (matrix_state == "all") {
-                crs_matrix.set(i, j, _val);
-                ccs_matrix.set(i, j, _val);
-                coo_matrix.set(i, j, _val);
-                matrix[i][j] = _val;
-            }
-        }
+        void set(int i, int j, const T& _val);
 
-        std::string print() {
-            return crs_matrix.print();
-        }
+        std::string print();
 
         void update_rows() { rows = matrix.size(); };
         void update_cols() { cols = matrix[0].size(); };
+
 
     protected:
 
     private:
         mutable std::vector<std::vector<T>>     matrix;
-
         // CRS (Compressed Row Storage) / CSR (Compressed Sparse Row)
         mutable CRS                             crs_matrix;
-
         // CCS (Compressed Column Storage) / CSC (Compressed Sparse Column)
         mutable CCS                             ccs_matrix;
-
         // COO (Coordinate List)
         mutable COO                             coo_matrix;
-
         // `matrix_state`:
-        // "CRS"
-        // "CCS"
-        // "COO"
-        // "def"
-        // "all"
+        // "CRS" / "CCS" / "COO" / "def" / "all"
         std::string                             matrix_state;
 
         mutable int                             rows;
         mutable int                             cols;
     };
-};
+}
 
-#include "../src/linalg.cxx"
+#include "../../src/matrix/matrix_constructors.hxx"
+#include "../../src/matrix/matrix_operations.hxx"
+#include "../../src/matrix/matrix_operators.hxx"
+#include "../../src/sparsemtxes/crs.hxx"
+#include "../../src/sparsemtxes/ccs.hxx"
+#include "../../src/sparsemtxes/coo.hxx"
 
-#endif //LINEAR_ALGEBRA_HXX
-
+#endif // DEFINITION_MATRIX_HXX
