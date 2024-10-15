@@ -14,7 +14,5 @@ namespace linalg {
     class Matrix;  
 };
 
-#include "matrix.hxx"
-
 #endif //LINEAR_ALGEBRA_HXX
 

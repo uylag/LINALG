@@ -9,6 +9,7 @@
 template<typename T>
 typename linalg::Matrix<T>::COO linalg::Matrix<T>::init_coo(const std::vector<std::vector<T>> _matrix) {
     COO mtx;
+    (void)_matrix;
     return mtx;
 }
 
@@ -26,7 +27,9 @@ const T& linalg::Matrix<T>::COO::operator()(int i, int j) const{
 
 template<typename T>
 void linalg::Matrix<T>::COO::set(int i, int j, const T& _val) {
-
+    (void)i;
+    (void)j;
+    (void)_val;
 }
 
 #endif // COO_MATRIX_DECLARE
